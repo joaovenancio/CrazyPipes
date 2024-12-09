@@ -13,7 +13,8 @@ export class MainMenu extends Scene
     conveyorContainer = null;
     conveyorQtyColumnsPerLine = 3; //Could retrieve spritesheet width and calculate it by dividing by its indivdual size
     tableSpriteIndex = 10;
-    conveyourSpriteHeight = 0;
+    conveyorSpriteHeight = 0;
+    conveyorSpriteWidth = 0;
     statusBarScale = 5;
     statusPositionX = 0;
     statusPositionY = -30;
@@ -81,6 +82,8 @@ export class MainMenu extends Scene
 
         this.setupAudio();
         //this.sound.get('musicPookatori').play();
+        //this.sound.get('musicHoliznaEncounter').play();
+
     }
 
 
@@ -89,15 +92,34 @@ export class MainMenu extends Scene
 
 
     setupPipeQueue() {
+        console.log('xai');
         for (let line = 0; line < this.gameplayConfig.board.qtyLines; line++) {
-            // let pipe = this.setupNewPipe(cell);
+
+            //let pipe = this.setupNewPipe([this.conveyorPartWidth, this.conveyorPartHeight * line]);
+
+            const conveyourCenter = this.conveyorSpriteWidth/2;
+            const conveyourLine =  (this.conveyorSpriteHeight * line) + (this.conveyorSpriteHeight/2) ;
+
+            console.log(conveyourCenter);
+            console.log(conveyourLine);
+
+            let pipe = this.setupNewPipe([conveyourCenter, conveyourLine]);
+            //let pipe = this.setupNewPipe([16/2, 16 * line + (16/2)]);
+            
+
+            this.conveyorContainer.add(pipe, true);
+
             // this.board.container.add(pipe, true);
+
+
+            //this.conveyorPartHeight
 
         }
     }
 
     setupAudio() {
-        this.sound.add('musicPookatori', {loop: true} );
+        this.sound.add('musicHoliznaEncounter', {loop: true} );
+        //this.sound.add('musicPookatori', {loop: true} );
     }
 
     setupPipeManager () {
@@ -128,7 +150,7 @@ export class MainMenu extends Scene
 
         this.board.container.add(pipe, true);
         
-        this.sound.play('sfxPipePlace'); //TO-DO
+        this.sound.play('sfxPipePlace');
         console.log('pipe created!!');
     }
 
@@ -152,6 +174,9 @@ export class MainMenu extends Scene
 
         let spriteHeight = conveyorPart.height;
         let spriteWidht = conveyorPart.width;
+
+        this.conveyorSpriteHeight = conveyorPart.height;
+        this.conveyorSpriteWidth = conveyorPart.width;
 
         this.renderConveyorStart(conveyorPart, spriteWidht);
         this.renderConveyorBody(conveyorPart, spriteWidht, spriteHeight);
