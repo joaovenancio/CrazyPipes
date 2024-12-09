@@ -1,0 +1,18 @@
+# System and IDE files
+Thumbs.db
+.DS_Store
+.idea
+*.suo
+*.sublime-project
+*.sublime-workspace
+*.vscode
+git-filter-repo
+/public/assets/music/pookatori-and-friends-kevin-macleod-main-version.mp3
+
+
+# Vendors
+node_modules/
+
+# Build
+dist/git
+/npm-debug.log
