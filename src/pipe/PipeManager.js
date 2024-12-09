@@ -29,6 +29,9 @@ export const PIPES = {
     },
     CROSS: {
 
+    },
+    START: {
+        
     }
 }
 
