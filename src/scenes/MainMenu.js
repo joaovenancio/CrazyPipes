@@ -93,17 +93,20 @@ export class MainMenu extends Scene
 
     setupPipeQueue() {
         console.log('xai');
+        
+        let pipe = null;
+
         for (let line = 0; line < this.gameplayConfig.board.qtyLines; line++) {
 
             //let pipe = this.setupNewPipe([this.conveyorPartWidth, this.conveyorPartHeight * line]);
 
-            const conveyourCenter = this.conveyorSpriteWidth/2;
-            const conveyourLine =  (this.conveyorSpriteHeight * line) + (this.conveyorSpriteHeight/2) ;
+            let conveyourCenter = this.conveyorSpriteWidth/2;
+            let conveyourLine =  (this.conveyorSpriteHeight * line) + (this.conveyorSpriteHeight/2) ;
 
             console.log(conveyourCenter);
             console.log(conveyourLine);
 
-            let pipe = this.setupNewPipe([conveyourCenter, conveyourLine]);
+            pipe = this.setupNewPipe([conveyourCenter, conveyourLine]);
             //let pipe = this.setupNewPipe([16/2, 16 * line + (16/2)]);
             
 
@@ -115,6 +118,8 @@ export class MainMenu extends Scene
             //this.conveyorPartHeight
 
         }
+
+        this.nextPipe = pipe;
     }
 
     setupAudio() {
