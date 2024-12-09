@@ -29,15 +29,18 @@ export const PIPES = {
     }
 }
 
-export class PipeManager extends Phaser.GameObjects.Group {
+export class PipeManager extends Phaser.Physics.Arcade.Group {
     
     gameplayConfig = null;
+    nextPipe = null;
+    pipesOnBoard = [];
+    pipesOnConveyor = [];
     
     constructor (scene, groupConfig, gameplayConfig) {
-        super(scene, null, groupConfig);
+        super(scene.physics.world, scene, null, groupConfig);
 
         this.gameplayConfig = gameplayConfig;
-
+        
 
     }
 
@@ -55,8 +58,8 @@ export class PipeManager extends Phaser.GameObjects.Group {
     }
 
 
-    movePipeTo() {
-
+    movePipeTo(pipe, position, miliSeconds) {
+        pipe.moveTo(position, miliSeconds);
     }
 
 }

@@ -1,6 +1,9 @@
-import {Sprite} from 'phaser'
+import Phaser from 'phaser'
 
-export class Pipe extends Phaser.GameObjects.Sprite {
+const MOVE_FRAMES_PER_SECONDS = 60;
+
+
+export class Pipe extends Phaser.Physics.Arcade.Sprite {
     
     isWaterAllowed = {
         up : false,
@@ -10,13 +13,20 @@ export class Pipe extends Phaser.GameObjects.Sprite {
     }
 
     isWaterFlowing = false;
+    isMoving = false;
+    currentAnimationIndex = 0;
+    moveToPosition = [0,0];
+    moveDestinationTolerance = 2;
+    cell = null;
 
-
+    physics = null;
 
     constructor (scene, position, pipeConfig) {
-        console.log(pipeConfig.textureKey);
-
+        //debugger
         super(scene, position[0], position[1], pipeConfig.textureKey, pipeConfig.textureIndex);
+
+        this.physics = scene.physics;
+        console.log(this.physics)
         //console.log(Number.isInteger(test));
         this.isWaterAllowed = pipeConfig.isWaterAllowed;
 
@@ -24,6 +34,31 @@ export class Pipe extends Phaser.GameObjects.Sprite {
 
         console.log(this.x + ' | ' + this.y);
 
+        //this.addToUpdateList();
+        //this.body.immovable = true;
+    }
+
+    preUpdate(delta, time) {
+        super.preUpdate(delta, time);
+
+        this.goTowardsPosition();
+        
+    }
+
+    goTowardsPosition() {
+        if (!this.isMoving) return;
+        if (Phaser.Math.Distance.Between(this.x, this.y, ...this.moveToPosition) > this.moveDestinationTolerance) return;
+
+        this.body.reset(this.x, this.y);
+        this.isMoving = false;
+
+        this.scene.events.emit('pipeFinishedMoving', this)
+    }
+
+    moveTo(position, miliSeconds) {
+        this.moveToPosition = position;
+        this.isMoving = true;
+        this.physics.moveTo(this, position[0], position[1] , MOVE_FRAMES_PER_SECONDS, miliSeconds);
     }
 
   

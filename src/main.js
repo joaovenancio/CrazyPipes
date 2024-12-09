@@ -17,13 +17,16 @@ const config = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
+    physics: {
+        default: "arcade"
+    },
     scene: [
         new Boot(),
         Preloader,
         MainMenu,
         Game,
         GameOver
-    ]
+    ],
 };
 
 export default new Phaser.Game(config);
