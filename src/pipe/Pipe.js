@@ -16,7 +16,7 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
     isMoving = false;
     currentAnimationIndex = 0;
     moveToPosition = [0,0];
-    moveDestinationTolerance = 2;
+    moveDestinationTolerance = 0.5;
     cell = null;
 
     physics = null;
@@ -26,13 +26,13 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         super(scene, position[0], position[1], pipeConfig.textureKey, pipeConfig.textureIndex);
 
         this.physics = scene.physics;
-        console.log(this.physics)
+        //console.log(this.physics)
         //console.log(Number.isInteger(test));
         this.isWaterAllowed = pipeConfig.isWaterAllowed;
 
         this.isWaterFlowing = false;
 
-        console.log(this.x + ' | ' + this.y);
+        //console.log(this.x + ' | ' + this.y);
 
         //this.addToUpdateList();
         //this.body.immovable = true;
@@ -51,7 +51,7 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
 
         this.body.reset(this.x, this.y);
         this.isMoving = false;
-
+        console.log('moving');
         this.scene.events.emit('pipeFinishedMoving', this)
     }
 
@@ -60,6 +60,8 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         this.isMoving = true;
         this.physics.moveTo(this, position[0], position[1] , MOVE_FRAMES_PER_SECONDS, miliSeconds);
     }
+
+    
 
   
 }
