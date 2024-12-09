@@ -9,6 +9,9 @@ const DEFAULT_GAMEPLAY_SETTINGS = {
         scale : 4.5,
         positionY : 500,
         paddingY : 60
+    },
+    conveyor : {
+        pipePositions : [[]]
     }
 };
 
