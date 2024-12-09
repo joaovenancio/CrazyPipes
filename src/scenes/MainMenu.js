@@ -4,6 +4,8 @@ import { Cell } from '../board/Cell';
 import { Board } from '../board/Board';
 import { Pipe } from '../pipe/Pipe';
 import { PipeManager, PIPES } from '../pipe/PipeManager';
+import { PipeHolder } from '../pipe/PipeHolder';
+import { SinglyLinkedList } from '../data_structures/SinglyLinkedList';
 
 export class MainMenu extends Scene
 {
@@ -24,12 +26,14 @@ export class MainMenu extends Scene
     backgroundBox = null;
     pipeManager = null;
     nextPipe = null;
+    currentPipe = [0,0];
 
 
 
     PIPE_MANAGER_CONFIG = {
-        classType : Pipe,
-        runChildUpdate : true
+        immovable: true
+        // classType : Pipe,
+        // runChildUpdate : true
     }
 
 
@@ -92,7 +96,7 @@ export class MainMenu extends Scene
 
 
     setupPipeQueue() {
-        console.log('xai');
+        //console.log('xai');
         
         let pipe = null;
 
@@ -103,23 +107,45 @@ export class MainMenu extends Scene
             let conveyourCenter = this.conveyorSpriteWidth/2;
             let conveyourLine =  (this.conveyorSpriteHeight * line) + (this.conveyorSpriteHeight/2) ;
 
-            console.log(conveyourCenter);
-            console.log(conveyourLine);
-
-            pipe = this.setupNewPipe([conveyourCenter, conveyourLine]);
+            // console.log(conveyourCenter);
+            // console.log(conveyourLine);
+            let conveyorPosition = [conveyourCenter, conveyourLine];
+            
+            pipe = this.setupNewPipe(conveyorPosition, PipeHolder.CONVEYOR);
             //let pipe = this.setupNewPipe([16/2, 16 * line + (16/2)]);
             
-
+            this.updatePipePositionsVariable(line, conveyorPosition)
+            
             this.conveyorContainer.add(pipe, true);
 
-            // this.board.container.add(pipe, true);
 
+            //this.physics.moveTo(pipe, 1, 1, 60, 1000);
+            // this.board.container.add(pipe, true);
+            
 
             //this.conveyorPartHeight
 
         }
 
-        this.nextPipe = pipe;
+        let pipesList = this.pipeManager.pipesOnConveyor;
+        const pipesListInverted = new SinglyLinkedList();
+
+        while ( pipesList.length > 0) {
+            pipe = pipesList.pop().val;
+            pipesListInverted.push(pipe);
+        }
+        
+        console.log(pipesListInverted);
+        
+        this.pipeManager.pipesOnConveyor = pipesListInverted;
+        
+
+        this.pipeManager.nextPipe = pipe;
+        //this.pipeManager.conveyorCreated = true;
+
+
+        
+        //console.log(this.pipeManager.updatePipesInConveyor());
     }
 
     setupAudio() {
@@ -128,8 +154,8 @@ export class MainMenu extends Scene
     }
 
     setupPipeManager () {
-        this.pipeManager = this.add.existing(new PipeManager(this, this.PIPE_MANAGER_CONFIG, this.gameplayConfig));
-        
+        this.pipeManager = this.physics.add.existing(new PipeManager(this, this.PIPE_MANAGER_CONFIG, this.gameplayConfig), true);
+        //this.physics.add.
         //this.pipeManager.create(Object.keys(PIPES).length);
 
         //this.pipeManager.createPipe(PIPES.SRAIGHT_LR, [40,500]);
@@ -150,21 +176,36 @@ export class MainMenu extends Scene
     freeCellClicked(cell) {
         if (this.pipeManager == null) return;
         
-        let pipe = this.setupNewPipe(cell.localPosition);
+        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD);
         cell.pipe = pipe;
 
         this.board.container.add(pipe, true);
         
         this.sound.play('sfxPipePlace');
-        console.log('pipe created!!');
+
+
+
+
+
+        pipe = this.pipeManager.getFirstPipe();
+        
+
+        let pipePosition = [...this.gameplayConfig.conveyor.pipePositions[0]];
+        pipePosition[1] -= this.conveyorSpriteHeight;
+        pipe = this.setupNewPipe(pipePosition, PipeHolder.CONVEYOR);
+        this.pipeManager.updatePipesInConveyor();
+        
+        console.log(pipe)
+        this.conveyorContainer.add(pipe, true);
+        //console.log('pipe created!!');
     }
 
     occupiedCellClicked(cell) {
         return;
     }
 
-    setupNewPipe(position) {
-        let newPipe = this.pipeManager.createPipe(PIPES.SRAIGHT_LR, position);
+    setupNewPipe(position, PipeHolder) {
+        let newPipe = this.pipeManager.createPipe(PIPES.SRAIGHT_LR, position, PipeHolder);
 
         
 
@@ -301,5 +342,12 @@ export class MainMenu extends Scene
     setupStatusBar() {
         let statusBar = this.add.image(this.statusPositionX, this.statusPositionY, 'statusBar').setOrigin(0);
         statusBar.setScale(this.statusBarScale);
+    }
+
+    updatePipePositionsVariable(line, position) {
+        console.log(this.gameplayConfig);
+        let pipePositons = this.gameplayConfig.conveyor.pipePositions;
+
+        pipePositons[line] = [...position]
     }
 }
