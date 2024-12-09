@@ -78,7 +78,12 @@ export class Preloader extends Scene
 
 
     loadMusics() {
-        this.load.audio('musicPookatori', 'music/pookatori-and-friends-kevin-macleod-main-version.mp3');
+        //this.load.audio('musicPookatori', 'music/pookatori-and-friends-kevin-macleod-main-version.mp3');
+        this.load.audio('musicHoliznaEncounter', 'music/holizna-cc0-random-encounter.mp3');
+        this.load.audio('musicHoliznaMini', 'music/holizna-cc0-mini-boss.mp3');
+
+        
+
     }
 
     loadSpriteSheets() {
