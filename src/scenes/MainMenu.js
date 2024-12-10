@@ -7,6 +7,8 @@ import { PipeManager, PIPES } from '../pipe/PipeManager';
 import { PipeHolder } from '../pipe/PipeHolder';
 import { SinglyLinkedList } from '../data_structures/SinglyLinkedList';
 import { Conveyor } from '../conveyour/Conveyor';
+import { Timer } from '../timer/Timer';
+import { GameState } from '../state/GameState';
 
 export class MainMenu extends Scene
 {
@@ -27,8 +29,9 @@ export class MainMenu extends Scene
     pipeManager = null;
     nextPipe = null;
     currentPipe = [0,0];
+    timer = null;
 
-
+    gameState = null;
 
     PIPE_MANAGER_CONFIG = {
         immovable: true
@@ -77,9 +80,52 @@ export class MainMenu extends Scene
         //this.sound.get('musicPookatori').play();
         //this.sound.get('musicHoliznaEncounter').play();
 
-        this.setupStartingPipe();//TO-DO 
-        this.startCountdown();
+        this.setupStartingPipe();
 
+        this.timer = new Timer(this.gameplayConfig.pipeFillTime);
+        console.log(this.gameplayConfig.pipeFillTime);
+
+
+        this.play();
+
+    }
+
+    secondsPassed = 0;
+
+    update(time, delta) {
+
+        if (this.gameState !== GameState.WATER_FLOWING) return;
+
+        if (this.timer.tick(delta)) {
+
+            this.secondsPassed++;
+
+            if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
+
+                console.log(this.pipeManager);
+                let nextPipe = this.pipeManager.getNextPipe();
+
+                if ( nextPipe === null) {
+                    this.gameOver();
+                    return;
+                }
+
+                this.secondsPassed = 0;
+                this.pipeManager.currentPipe = nextPipe;
+                return;
+
+            }
+
+            this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
+            //sound
+            console.log('AYOOO');
+        }
+    }
+
+    gameOver() {
+        this.gameState = GameState.GAME_OVER;
+
+        console.log('Game -> GameOver(): You lost :(');
     }
 
 
@@ -100,6 +146,7 @@ export class MainMenu extends Scene
         let startingPipe = this.pipeManager.createPipe(pipeType, cell.localPosition, PipeHolder.BOARD) ;
 
         this.board.container.add(startingPipe);
+        this.pipeManager.currentPipe = startingPipe;
 
         cell.pipe = startingPipe;
         startingPipe.cell = cell;
@@ -129,7 +176,9 @@ export class MainMenu extends Scene
 
     }
 
-    startCountdown () {
+    play () {
+
+        this.gameState = GameState.WATER_FLOWING;
 
         this.startWaterFlow();
     }
@@ -235,6 +284,7 @@ export class MainMenu extends Scene
         this.screenCenter = this.registry.get('screenCenter');
 
         this.conveyorY = this.conveyorY * this.gameplayConfig.board.scale
+        this.gameState = this.gameplayConfig.state;
 
     }
 

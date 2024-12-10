@@ -14,6 +14,8 @@ export const PIPES = {
         },
         textureKey : 'pipeStraight',
         textureIndex : 0,
+        spritesheetAnimation : [0,6],
+        animationQtyFrames: 6,
         rotation : 90
     },
     SRAIGHT_UD: {
@@ -38,7 +40,9 @@ export const PIPES = {
             right : false
         },
         textureKey : 'pipeStart',
-        textureIndex : 14
+        textureIndex : 14,
+        spritesheetAnimation : [14,20],
+        animationQtyFrames: 6
     },
     START_R: {
         isWaterAllowed : {
@@ -48,7 +52,9 @@ export const PIPES = {
             right : true
         },
         textureKey : 'pipeStart',
-        textureIndex : 21
+        textureIndex : 21,
+        spritesheetAnimation : [21,28],
+        animationQtyFrames: 6
     },
     START_U: {
         isWaterAllowed : {
@@ -58,7 +64,9 @@ export const PIPES = {
             right : false
         },
         textureKey : 'pipeStart',
-        textureIndex : 7
+        textureIndex : 7,
+        spritesheetAnimation : [7,13],
+        animationQtyFrames: 6
     },
     START_D: {
         isWaterAllowed : {
@@ -68,19 +76,22 @@ export const PIPES = {
             right : false
         },
         textureKey : 'pipeStart',
-        textureIndex : 0
+        textureIndex : 0,
+        spritesheetAnimation : [0,6],
+        animationQtyFrames: 6
     }
 }
 
 export class PipeManager extends Phaser.Physics.Arcade.Group {
     
     gameplayConfig = null;
-    nextPipe = null;
+    //nextPipe = null;
     pipesOnBoard = new SinglyLinkedList ();
     conveyorPipes = new SinglyLinkedList ();
     static abra = 3;
     conveyorFirst = null;
     conveyorLast = null;
+    currentPipe = null;
     
     constructor (scene, groupConfig, gameplayConfig) {
 
@@ -112,6 +123,12 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
         
         return newPipe;
 
+    }
+
+    getNextPipe() {
+        let a = 0;
+        
+        return null;
     }
 
     invertConveyorPipesList () {
