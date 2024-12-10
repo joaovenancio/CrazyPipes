@@ -19,6 +19,9 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
     moveDestinationTolerance = 0.5;
     cell = null;
 
+    spritesheetAnimation = [];
+    animationQtyFrames = 0;
+
     physics = null;
 
     constructor (scene, position, pipeConfig) {
@@ -29,6 +32,9 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         //console.log(this.physics)
         //console.log(Number.isInteger(test));
         this.isWaterAllowed = pipeConfig.isWaterAllowed;
+
+        this.spritesheetAnimation = pipeConfig.spritesheetAnimation;
+        this.currentAnimationIndex = pipeConfig.textureIndex;
 
         this.isWaterFlowing = false;
 
@@ -66,6 +72,11 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
     }
 
     flow() {
+        this.currentAnimationIndex++;
+
+        if (this.currentAnimationIndex > this.spritesheetAnimation[1]) return;
+        
+        this.setFrame(this.currentAnimationIndex);
         //Emit game over or next pipe (get points)
     }
 
