@@ -112,6 +112,12 @@ export class Preloader extends Scene
             frameHeight: 16
         })
 
+        this.load.spritesheet('pipeStraightUD', 'pipes/pipe-straight-ud-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        })
+
+
         this.load.spritesheet('pipeCurve', 'pipes/pipe-curve-Sheet.png', {
             frameWidth: 16,
             frameHeight: 16
