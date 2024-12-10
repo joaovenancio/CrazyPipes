@@ -61,7 +61,13 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         this.physics.moveTo(this, position[0], position[1] , MOVE_FRAMES_PER_SECONDS, miliSeconds);
     }
 
-    
+    startFlow() {
+        //
+    }
+
+    flow() {
+        //Emit game over or next pipe (get points)
+    }
 
   
 }
