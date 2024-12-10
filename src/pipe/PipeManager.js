@@ -30,8 +30,45 @@ export const PIPES = {
     CROSS: {
 
     },
-    START: {
-
+    START_L: {
+        isWaterAllowed : {
+            up : false,
+            down : false,
+            left : true,
+            right : false
+        },
+        textureKey : 'pipeStart',
+        textureIndex : 14
+    },
+    START_R: {
+        isWaterAllowed : {
+            up : false,
+            down : false,
+            left : false,
+            right : true
+        },
+        textureKey : 'pipeStart',
+        textureIndex : 21
+    },
+    START_U: {
+        isWaterAllowed : {
+            up : true,
+            down : false,
+            left : false,
+            right : false
+        },
+        textureKey : 'pipeStart',
+        textureIndex : 7
+    },
+    START_D: {
+        isWaterAllowed : {
+            up : false,
+            down : true,
+            left : false,
+            right : false
+        },
+        textureKey : 'pipeStart',
+        textureIndex : 0
     }
 }
 
@@ -88,7 +125,7 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
         }
         
         this.conveyorPipes = pipesListInverted;
-        
+
     }
 
     addToConveyor(pipe) {

@@ -53,7 +53,7 @@ export class MainMenu extends Scene
 
     preload ()
     {
-        this.loadVariables();
+        this.loadGlobalVariables();
     }
 
     create ()
@@ -72,14 +72,75 @@ export class MainMenu extends Scene
         this.setupPipeManager();  
         this.setupPipeQueue(); 
         //this.menu();
-        this.setupAudio(); //TO-DO
+        this.setupAudio(); 
 
         //this.sound.get('musicPookatori').play();
         //this.sound.get('musicHoliznaEncounter').play();
 
+        this.setupStartingPipe();//TO-DO 
+        this.startCountdown();
+
     }
 
 
+    setupStartingPipe() {
+
+        let boardLines = this.gameplayConfig.board.qtyLines;
+
+        let posX = Phaser.Math.Between( 0, boardLines-2);
+        let posY = Phaser.Math.Between( 0, this.gameplayConfig.board.qtyColumns-1);
+
+        let cell = this.board.cells[posX][posY];
+
+        let possiblePipes = this.getPossibleStartPipeTypes(posX, posY, boardLines);
+
+        let pipeType = possiblePipes[Phaser.Math.Between( 0, possiblePipes.length-1)]; //TO-DO 
+
+        let startingPipe = this.pipeManager.createPipe(pipeType, cell.localPosition, PipeHolder.BOARD) ;
+
+        this.board.container.add(startingPipe);
+
+        cell.pipe = startingPipe;
+        startingPipe.cell = cell;
+        
+    }
+
+    getPossibleStartPipeTypes(posX, posY, boardLines) {
+
+        let possiblePiples = [];
+
+        if (posX === 0) {
+            possiblePiples.push(PIPES.START_D);
+        } else {
+            possiblePiples.push(PIPES.START_D, PIPES.START_U);
+        }   
+
+        if (posY === 0) {
+            possiblePiples.push(PIPES.START_R);
+        } else if (posY === boardLines-1) {
+            possiblePiples.push(PIPES.START_L);
+        } else {
+            possiblePiples.push(PIPES.START_R);
+            possiblePiples.push(PIPES.START_L);
+        }       
+
+        return possiblePiples;
+
+    }
+
+    getRandomStartPipeType(possiblePipes) {
+
+        return ;
+    }
+
+    startCountdown () {
+
+        this.startWaterFlow();
+    }
+
+    startWaterFlow() {
+
+    }
 
     initializeGlobalEvents() {
 
@@ -172,7 +233,7 @@ export class MainMenu extends Scene
 
     }
 
-    loadVariables() {
+    loadGlobalVariables() {
         
         this.gameplayConfig = this.registry.get('gameplaySettings');
         this.screenCenter = this.registry.get('screenCenter');
