@@ -86,13 +86,14 @@ export class MainMenu extends Scene
     setupStartingPipe() {
 
         let boardLines = this.gameplayConfig.board.qtyLines;
+        let boardColumns = this.gameplayConfig.board.qtyColumns;
 
         let posX = Phaser.Math.Between( 0, boardLines-2);
-        let posY = Phaser.Math.Between( 0, this.gameplayConfig.board.qtyColumns-1);
+        let posY = Phaser.Math.Between( 0, boardColumns-1);
 
         let cell = this.board.cells[posX][posY];
 
-        let possiblePipes = this.getPossibleStartPipeTypes(posX, posY, boardLines);
+        let possiblePipes = this.getPossibleStartPipeTypes(posX, posY, boardColumns);
 
         let pipeType = possiblePipes[Phaser.Math.Between( 0, possiblePipes.length-1)]; 
 
