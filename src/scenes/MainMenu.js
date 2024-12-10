@@ -28,7 +28,7 @@ export class MainMenu extends Scene
     backgroundBox = null;
     pipeManager = null;
     nextPipe = null;
-    currentPipe = [0,0];
+    
     timer = null;
 
     gameState = null;
@@ -83,7 +83,6 @@ export class MainMenu extends Scene
         this.setupStartingPipe();
 
         this.timer = new Timer(this.gameplayConfig.pipeFillTime);
-        console.log(this.gameplayConfig.pipeFillTime);
 
 
         this.play();
@@ -102,23 +101,30 @@ export class MainMenu extends Scene
 
             if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
 
-                console.log(this.pipeManager);
-                let nextPipe = this.pipeManager.getNextPipe();
+                //console.log(this.pipeManager);
+                let nextPipe = this.pipeManager.getNextPipe(this.board.cells);  //TO-DO !!!!!!!!!
+                console.log('!!!!!!!!!!!!!!!');
+                console.log(nextPipe);
+
+                this.pipeManager.currentPipe = nextPipe;
+
+                console.log(nextPipe);
 
                 if ( nextPipe === null) {
                     this.gameOver();
                     return;
                 }
 
+                nextPipe.startFlow();
                 this.secondsPassed = 0;
-                this.pipeManager.currentPipe = nextPipe;
+                //this.pipeManager.currentPipe = nextPipe;
                 return;
 
             }
 
             this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
             //sound
-            console.log('AYOOO');
+            //console.log('AYOOO');
         }
     }
 
@@ -259,9 +265,9 @@ export class MainMenu extends Scene
 
     }
 
-    setupNewPipe(position, typeOfPipeHolder) {
+    setupNewPipe(position, typeOfPipeHolder) {//!!!!
 
-        let newPipe = this.pipeManager.createPipe(PIPES.SRAIGHT_LR, position, typeOfPipeHolder);
+        let newPipe = this.pipeManager.createPipe(PIPES.CURVE_RD, position, typeOfPipeHolder);
 
         return newPipe;
         
@@ -325,6 +331,7 @@ export class MainMenu extends Scene
         this.board.container.add(pipe, true);
 
         cell.pipe = pipe;
+        pipe.cell = cell;
         
         this.createNewConveyorPipe();
         

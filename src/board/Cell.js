@@ -13,7 +13,7 @@ export class Cell extends Phaser.GameObjects.Sprite {
         .setInteractive();
 
         this.localPosition = [...position];
-        this.matrixPosition = matrixPosition;
+        this.matrixPosition = [...matrixPosition];
         
         this.setupEvents();
     }
