@@ -119,6 +119,10 @@ export class Preloader extends Scene
             frameHeight: 16
         })
 
+        this.load.spritesheet('pipeStart', 'pipes/pipe-start-Sheet.png', {
+            frameWidth: 16,
+            frameHeight: 16
+        })
 
 
         this.load.audio('sfxPipePlace', 'pipes/sfx/sfx-put_pipe.mp3');
