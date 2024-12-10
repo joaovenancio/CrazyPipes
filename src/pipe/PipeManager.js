@@ -31,7 +31,7 @@ export const PIPES = {
 
     },
     START: {
-        
+
     }
 }
 
@@ -40,61 +40,74 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
     gameplayConfig = null;
     nextPipe = null;
     pipesOnBoard = new SinglyLinkedList ();
-    pipesOnConveyor = new SinglyLinkedList ();
+    conveyorPipes = new SinglyLinkedList ();
     static abra = 3;
     conveyorFirst = null;
     conveyorLast = null;
     
     constructor (scene, groupConfig, gameplayConfig) {
+
         super(scene.physics.world, scene, null, groupConfig);
 
         this.gameplayConfig = gameplayConfig;
-        
 
     }
 
     conveyorCreated = false;
 
-    createPipe(pipeType, position, pipeHolder) {
+    createPipe(pipeType, position, typeOfPipeHolder) {
 
-        let pipe = new Pipe(this.scene, position, pipeType);
-        //pipe.scale = this.gameplayConfig.board.scale ;
-        pipe.setOrigin(0);
+        let newPipe = new Pipe(this.scene, position, pipeType);
+        newPipe.setOrigin(0);
 
-        this.add(pipe, true);
-
-        //console.log(this.children.size);
+        this.add(newPipe, true);
         
-        if (pipeHolder == null) return pipe;
+        if (typeOfPipeHolder == null) return newPipe;
 
-        switch  (pipeHolder) {
+        switch  (typeOfPipeHolder) {
             case PipeHolder.CONVEYOR:
-                this.addToConveyor(pipe);
+                this.addToConveyor(newPipe);
                 break;
             case PipeHolder.BOARD:
-                this.addToBoard(pipe);
+                this.addToBoard(newPipe); //TO-DO
                 break;
         }
         
-        return pipe;
+        return newPipe;
+
+    }
+
+    invertConveyorPipesList () {
+
+        let pipe = null;
+        const pipesListInverted = new SinglyLinkedList();
+
+        while ( this.conveyorPipes.length > 0) {
+            pipe = this.conveyorPipes.pop().val;
+            pipesListInverted.push(pipe);
+        }
+        
+        this.conveyorPipes = pipesListInverted;
+        
     }
 
     addToConveyor(pipe) {
-        if (this.pipesOnConveyor.length >= this.gameplayConfig.board.qtyLines) {
+
+        if (this.conveyorPipes.length >= this.gameplayConfig.board.qtyLines) {
             console.warn('PipeManager -> addToConveyor(pipe): Conveyour is full. Returning only the pipe');
             return pipe;
         }
 
-        this.pipesOnConveyor.push(pipe);
+        this.conveyorPipes.push(pipe);
         
     }
 
     updatePipesInConveyor() {
 //        let pipe = this.createPipe(PIPES.SRAIGHT_LR, [0,0] , PipeHolder.CONVEYOR);
         
-        let pipes = this.pipesOnConveyor.toArray();
+        let pipes = this.conveyorPipes.toArray();
         
-        let pipe = this.pipesOnConveyor.last();
+        let pipe = this.conveyorPipes.last();
         pipe.moveTo( [this.gameplayConfig.conveyor.pipePositions[pipes.length-1][0], this.gameplayConfig.conveyor.pipePositions[pipes.length-1][1]], 600);
 
 
@@ -117,12 +130,12 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
 
     getFirstPipe() {
         //let pipe = this.pipesOnConveyor.get(this.gameplayConfig.board.qtyLines-1);
-        var pipeMan = this.pipesOnConveyor.first();
-        console.log(this.pipesOnConveyor);
+        var pipeMan = this.conveyorPipes.first();
+        console.log(this.conveyorPipes);
 
         pipeMan.moveTo([pipeMan.x,pipeMan.y + 500], 4000);
         
-        this.pipesOnConveyor.shift(0);
+        this.conveyorPipes.shift(0);
 
         return pipeMan;
     }
