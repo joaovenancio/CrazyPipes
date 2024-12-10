@@ -1,7 +1,9 @@
 import { Scene } from 'phaser';
+import { GameState } from '../state/GameState';
 
 const DEFAULT_GAMEPLAY_SETTINGS = {
-    pipeFillTime : 6,
+    pipeFillTime : 1000,
+    pipeTotalFillTime : 6,
     board : {
         scale : 1,
         qtyLines : 7,
@@ -17,7 +19,8 @@ const DEFAULT_GAMEPLAY_SETTINGS = {
         conveyorSpriteWidth: 0,
         conveyorSpriteHeight : 0
 
-    }
+    },
+    state: GameState.MENU
 };
 
 const DEFAULT_GAME_SETTINGS = {
