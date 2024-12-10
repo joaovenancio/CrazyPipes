@@ -68,4 +68,5 @@ export class Board {
         this.gameplayConfig.board.y = this.container.y;
         this.gameplayConfig.board.x = this.container.x;
     }
+
 }
