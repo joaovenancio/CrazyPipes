@@ -8,10 +8,15 @@ const DEFAULT_GAMEPLAY_SETTINGS = {
         qtyColumns : 9,
         scale : 4.5,
         positionY : 500,
-        paddingY : 60
+        paddingY : 60,
+        x: 0,
+        y: 0
     },
     conveyor : {
-        pipePositions : [[]]
+        pipePositions : [[]],
+        conveyorSpriteWidth: 0,
+        conveyorSpriteHeight : 0
+
     }
 };
 
