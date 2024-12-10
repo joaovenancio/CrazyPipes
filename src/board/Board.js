@@ -6,12 +6,17 @@ export class Board {
     size = [0,0];
     container = null; //Phaser.GameObjects.Container
     cells = [[]];
+    gameplayConfig = null;
 
-    constructor (scene, size, container, textureKey, cellHorizontalPadding, cellVerticalPadding) {
+    constructor (scene, size, textureKey, cellHorizontalPadding, cellVerticalPadding, gameplayConfig) {
         this.scene = scene;
         this.size = [size[0], size[1]]
         this.cells = [[]];
-        this.container = container;
+        this.container = scene.add.container(0,0);
+        this.gameplayConfig = gameplayConfig;
+        
+        this.container.scale = gameplayConfig.board.scale;
+
 
         this.setupCells(textureKey,cellHorizontalPadding,cellVerticalPadding);
         //let startingPosition = [image.width/2, image.height/2];
@@ -58,6 +63,9 @@ export class Board {
         let newYPos = screenCenter[1] - containerHeight/2;
 
         this.container.x = newXPos;
-        this.container.y = newYPos;
+        this.container.y = newYPos + this.gameplayConfig.board.paddingY;
+
+        this.gameplayConfig.board.y = this.container.y;
+        this.gameplayConfig.board.x = this.container.x;
     }
 }
