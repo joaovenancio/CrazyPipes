@@ -94,7 +94,7 @@ export class MainMenu extends Scene
 
         let possiblePipes = this.getPossibleStartPipeTypes(posX, posY, boardLines);
 
-        let pipeType = possiblePipes[Phaser.Math.Between( 0, possiblePipes.length-1)]; //TO-DO 
+        let pipeType = possiblePipes[Phaser.Math.Between( 0, possiblePipes.length-1)]; 
 
         let startingPipe = this.pipeManager.createPipe(pipeType, cell.localPosition, PipeHolder.BOARD) ;
 
@@ -126,11 +126,6 @@ export class MainMenu extends Scene
 
         return possiblePiples;
 
-    }
-
-    getRandomStartPipeType(possiblePipes) {
-
-        return ;
     }
 
     startCountdown () {
