@@ -1,6 +1,6 @@
 {
     "name": "pipe-mania",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "src/main.js",
     "scripts": {
         "dev": "node log.js dev & webpack-dev-server --config webpack/config.js --open",
