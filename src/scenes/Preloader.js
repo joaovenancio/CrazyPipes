@@ -2,7 +2,7 @@ import { Scene } from 'phaser';
 import { GameState } from '../state/GameState';
 
 const DEFAULT_GAMEPLAY_SETTINGS = {
-    pipeFillTime : 1800,
+    pipeFillTime : 800,
     pipeTotalFillTime : 6,
     board : {
         scale : 1,
@@ -22,7 +22,9 @@ const DEFAULT_GAMEPLAY_SETTINGS = {
     },
     state: GameState.MENU,
     correctPipePoints : 100,
-    wrongPipePoints : 50
+    wrongPipePoints : 50,
+    countdown : 10,
+    score : 0
 };
 
 const DEFAULT_GAME_SETTINGS = {
