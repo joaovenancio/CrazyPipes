@@ -156,7 +156,8 @@ export const PIPES = {
         textureIndex : 0,
         spritesheetAnimation : [0,6],
         animationQtyFrames: 6
-    }
+    },
+    length : 6
 }
 
 export class PipeManager extends Phaser.Physics.Arcade.Group {
@@ -430,7 +431,7 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
         console.log(nextCell.pipe);
 
 
-        this.currentPipe = nextPipe;
+        //this.currentPipe = nextPipe;
         return null;
 
     }

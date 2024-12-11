@@ -2,7 +2,7 @@ import { Scene } from 'phaser';
 import { GameState } from '../state/GameState';
 
 const DEFAULT_GAMEPLAY_SETTINGS = {
-    pipeFillTime : 1000,
+    pipeFillTime : 3000,
     pipeTotalFillTime : 6,
     board : {
         scale : 1,

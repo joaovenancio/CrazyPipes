@@ -265,9 +265,41 @@ export class MainMenu extends Scene
 
     }
 
-    setupNewPipe(position, typeOfPipeHolder) {//!!!!
+    setupNewPipe(position, typeOfPipeHolder, typeOfPipe) {//!!!!
 
-        let newPipe = this.pipeManager.createPipe(PIPES.CURVE_RD, position, typeOfPipeHolder);
+        let pipeConfig = typeOfPipe; 
+
+        if (typeOfPipe == null) {
+            switch (Phaser.Math.Between( 1, PIPES.length)) {
+                case 1:
+                    pipeConfig = PIPES.SRAIGHT_LR;
+                    break;
+                
+                case 2:
+                    pipeConfig = PIPES.SRAIGHT_UD;
+                    break;
+    
+                case 3:
+                    pipeConfig = PIPES.CURVE_LD;
+                    break;
+    
+    
+                case 4:
+                    pipeConfig = PIPES.CURVE_LU;
+                    break;
+    
+    
+                case 5:
+                    pipeConfig = PIPES.CURVE_RD;
+                    break;
+    
+                case 6:
+                    pipeConfig = PIPES.CURVE_RU;
+                    break;
+            }
+        }
+
+        let newPipe = this.pipeManager.createPipe(pipeConfig, position, typeOfPipeHolder);
 
         return newPipe;
         
@@ -321,29 +353,32 @@ export class MainMenu extends Scene
 
     }
 
+    firstPipe = null;
+
     freeCellClicked(cell) {
 
         if (this.pipeManager == null) return;
         
         this.sound.play('sfxPipePlace');
-
-        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD);
+        
+        this.createNewConveyorPipe();
+        
+        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD, this.firstPipe.pipeConfig); //TO-DO
         this.board.container.add(pipe, true);
 
         cell.pipe = pipe;
         pipe.cell = cell;
         
-        this.createNewConveyorPipe();
         
     }
 
     createNewConveyorPipe() {
 
-        let pipe = this.pipeManager.getFirstPipe();
+        this.firstPipe = this.pipeManager.getFirstPipe();
 
         let lastPipePosition = [...this.gameplayConfig.conveyor.pipePositions[0]];
         lastPipePosition[1] -= this.conveyorSpriteHeight;
-        pipe = this.setupNewPipe(lastPipePosition, PipeHolder.CONVEYOR);
+        let pipe = this.setupNewPipe(lastPipePosition, PipeHolder.CONVEYOR);
 
         this.pipeManager.updatePipesInConveyor();
         
