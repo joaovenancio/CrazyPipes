@@ -49,7 +49,7 @@ export class MainMenu extends Scene
     }
 
     setupTitle() {
-        let textStyle = {fontSize: '100px', fill: this.textColor};
+        let textStyle = {fontSize: '100px', fill: this.textColor, stroke: '#FFFFFF', strokeThickness: 8, align: 'center', fontFamily: 'Arial Black'};
         let buttonPosition = [...this.screenCenter];
         buttonPosition[1] -= 80;
 

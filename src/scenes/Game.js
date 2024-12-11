@@ -189,7 +189,7 @@ export class Game extends Scene
 
     setupTexts() {
 
-        let textStyle = {fontSize: '60px', fill: '#000000'};
+        let textStyle = {fontSize: '50px', fill: '#000000', fontFamily: 'Arial Black', stroke: '#FFFFFF', strokeThickness: 4, align: 'center'};
 
         this.scoreText = this.add.text(this.screenCenter[0], this.scoreTextPositionY, this.countdown, textStyle)
         .setOrigin(0.5,0); //.setAbove();
