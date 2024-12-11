@@ -162,6 +162,7 @@ export class Game extends Scene
         .setOrigin(0.5,0); //.setAbove();
 
         console.log("OIIIIIIIIIII?");
+
     }
 
     addPoints() {
@@ -244,20 +245,6 @@ export class Game extends Scene
 
     }
 
-
-
-    menu () {
-        // let textStyle = {fontSize: this.fontSize, fill: this.textColor}
-        // let button = new Button(this, 'This is a test', screenCenter, textStyle, null);
-        // button.addOnClick();
-
-        // this.input.once('pointerdown', () => {
-
-        //     this.scene.start('Game');
-
-        // });
-    }
-
     setupConveyor() {
 
         this.conveyor = new Conveyor(this, 0 , 0 , this.gameplayConfig);
@@ -284,7 +271,7 @@ export class Game extends Scene
             this.updatePipePositionsVariable(line, pipePosition)
             
             this.conveyor.add(
-                this.setupNewPipe(pipePosition, PipeHolder.CONVEYOR), //this.setupNewPipe([16/2, 16 * line + (16/2)]);
+                this.setupNewPipe(pipePosition, PipeHolder.CONVEYOR),
                 true
             );
 
@@ -440,7 +427,7 @@ export class Game extends Scene
 
         this.createNewConveyorPipe();
 
-        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD, this.firstPipe.pipeConfig); //TO-DO
+        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD, this.firstPipe.pipeConfig);
         this.board.container.add(pipe, true);
 
         cell.pipe = pipe;
@@ -457,11 +444,11 @@ export class Game extends Scene
     onCellClick (cell) {
 
         if (cell.pipe != null)  {
-            this.occupiedCellClicked(cell); //TO-DO
+            this.occupiedCellClicked(cell);
             return;
         };
 
-        this.freeCellClicked(cell); //TO-DO
+        this.freeCellClicked(cell);
     }
 }
 
