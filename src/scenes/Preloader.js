@@ -2,7 +2,7 @@ import { Scene } from 'phaser';
 import { GameState } from '../state/GameState';
 
 const DEFAULT_GAMEPLAY_SETTINGS = {
-    pipeFillTime : 3000,
+    pipeFillTime : 1800,
     pipeTotalFillTime : 6,
     board : {
         scale : 1,
@@ -20,7 +20,9 @@ const DEFAULT_GAMEPLAY_SETTINGS = {
         conveyorSpriteHeight : 0
 
     },
-    state: GameState.MENU
+    state: GameState.MENU,
+    correctPipePoints : 100,
+    wrongPipePoints : 50
 };
 
 const DEFAULT_GAME_SETTINGS = {
@@ -63,6 +65,7 @@ export class Preloader extends Scene
         this.loadImages();
         this.loadSpriteSheets();
         this.loadPipes();
+        this.loadSFX();
         this.loadMusics();
     }
 
@@ -95,6 +98,15 @@ export class Preloader extends Scene
 
         
 
+    }
+
+
+    loadSFX() {
+
+        this.load.audio('tick', 'sfx/371176__samsterbirdies__button-ting.wav');
+
+        this.load.audio('sfxPipeExplosion', 'sfx/explosion-maodin204.wav');
+        
     }
 
     loadSpriteSheets() {
