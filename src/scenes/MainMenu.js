@@ -33,6 +33,9 @@ export class MainMenu extends Scene
 
     gameState = null;
 
+
+    points = 0;
+
     PIPE_MANAGER_CONFIG = {
         immovable: true
         // classType : Pipe,
@@ -99,6 +102,8 @@ export class MainMenu extends Scene
 
             this.secondsPassed++;
 
+            this.sound.play('tick');
+
             if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
 
                 //console.log(this.pipeManager);
@@ -115,6 +120,7 @@ export class MainMenu extends Scene
                     return;
                 }
 
+                this.addPoints();
                 nextPipe.startFlow();
                 this.secondsPassed = 0;
                 //this.pipeManager.currentPipe = nextPipe;
@@ -128,10 +134,14 @@ export class MainMenu extends Scene
         }
     }
 
+    addPoints() {
+        this.points += this.gameplayConfig.correctPipePoints;
+    }
+
     gameOver() {
         this.gameState = GameState.GAME_OVER;
 
-        console.log('Game -> GameOver(): You lost :(');
+        console.log('Game -> GameOver(): Final score = ' + this.points);
     }
 
 
@@ -362,14 +372,14 @@ export class MainMenu extends Scene
         this.sound.play('sfxPipePlace');
         
         this.createNewConveyorPipe();
-        
+
         let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD, this.firstPipe.pipeConfig); //TO-DO
         this.board.container.add(pipe, true);
 
         cell.pipe = pipe;
         pipe.cell = cell;
         
-        
+        this.firstPipe.destroy();
     }
 
     createNewConveyorPipe() {
@@ -387,6 +397,24 @@ export class MainMenu extends Scene
     }
 
     occupiedCellClicked(cell) {
+
+        this.sound.play('sfxPipeExplosion');
+        this.points -= this.gameplayConfig.wrongPipePoints;
+
+        cell.pipe.cell = null;
+        cell.pipe.destroy();
+
+        this.createNewConveyorPipe();
+
+        let pipe = this.setupNewPipe(cell.localPosition, PipeHolder.BOARD, this.firstPipe.pipeConfig); //TO-DO
+        this.board.container.add(pipe, true);
+
+        cell.pipe = pipe;
+        pipe.cell = cell;
+        
+        this.firstPipe.destroy();
+        
+
         return;
     }
 
