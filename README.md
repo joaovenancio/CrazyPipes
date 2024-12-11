@@ -4,7 +4,7 @@ Crarzy Pipes is a Phaser3 game inspired by PipeMania.
 
 ## Versions
 
-- Latest: [1.0.0](https://github.com/joaovenancio/CrazyPipes/releases/tag/v1.0.0)
+- Latest: [1.0.1](https://github.com/joaovenancio/CrazyPipes/releases/tag/v1.0.1)
 - Live version available on: https://venancio.itch.io/crazy-pipes 
 
 ## Requirements
