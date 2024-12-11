@@ -12,11 +12,9 @@ import { GameState } from '../state/GameState';
 
 export class Game extends Scene
 {
+
     gameplayConfig = null;
-    
     conveyor = null;
-    
-    
     conveyorSpriteHeight = 0;
     conveyorSpriteWidth = 0;
     statusBarScale = 5;
@@ -28,32 +26,19 @@ export class Game extends Scene
     backgroundBox = null;
     pipeManager = null;
     nextPipe = null;
-    
     timer = null;
     countdownTimer = null;
-
     gameState = null;
-
     scoreTextPositionY = 20;
     scoreText = null;
-
     points = 0;
-
-    PIPE_MANAGER_CONFIG = {
-        immovable: true
-        // classType : Pipe,
-        // runChildUpdate : true
-    }
-
+    secondsPassed = 0;
 
 
     constructor ()
     {
         super('Game');
     }
-
-
-
 
 
     init() {
@@ -65,60 +50,26 @@ export class Game extends Scene
         this.loadGlobalVariables();
     }
 
-    create ()
-    {   
-        this.conveyor = null;
-        this.conveyorSpriteHeight = 0;
-        this.conveyorSpriteWidth = 0;
-        this.statusBarScale = 5;
-        this.statusPositionX = 0;
-        this.statusPositionY = -30;
-        this.boardPositionX;
-        this.board = null;
-        this.backgroundBox = null;
-        this.pipeManager = null;
-        this.nextPipe = null;
-        this.timer = null;
-        this.points = 0;
-        this.scoreTextPositionY = 20;
-
-        this.countdownTimer = new Timer(1000);
-        this.countdown = this.gameplayConfig.countdown;
-
-
+    create () {   
+        
+        this.setupStartingVariables();
         this.setupBackground();
         this.setupBoard();
-
-        let boardBounds = this.board.container.getBounds();
-        let boardScale = this.gameplayConfig.board.scale;
-        this.backgroundBox.displayWidth = boardBounds.width + ((16 + 7) * boardScale);
-        this.backgroundBox.displayHeight = boardBounds.height + ((16 + 16) * boardScale);
-        
+        this.setupBackgroundBox();
         this.setupConveyor();
         this.setupStatusBar();
         this.setupTexts();
-        
         this.setupPipeManager();  
         this.setupPipeQueue(); 
-        //this.menu();
-        this.setupAudio(); 
-
-        //this.sound.get('musicPookatori').play();
-        this.sound.get('musicHoliznaEncounter').play();
-
+        this.setupAudio();
         this.setupStartingPipe();
-
         this.timer = new Timer(this.gameplayConfig.pipeFillTime);
-        
 
-        this.secondsPassed = 0;
-
+        this.startAudio();
         this.play();
 
     }
-
-    secondsPassed = 0;
-
+    
     update(time, delta) {
 
         switch (this.gameState) {
@@ -181,10 +132,40 @@ export class Game extends Scene
         }
 
         if (this.gameState !== GameState.WATER_FLOWING) return;
-
         
+    }
 
-        
+
+    setupStartingVariables() {
+        this.conveyor = null;
+        this.conveyorSpriteHeight = 0;
+        this.conveyorSpriteWidth = 0;
+        this.statusBarScale = 5;
+        this.statusPositionX = 0;
+        this.statusPositionY = -30;
+        this.boardPositionX;
+        this.board = null;
+        this.backgroundBox = null;
+        this.pipeManager = null;
+        this.nextPipe = null;
+        this.timer = null;
+        this.points = 0;
+        this.scoreTextPositionY = 20;
+        this.countdownTimer = new Timer(1000);
+        this.countdown = this.gameplayConfig.countdown;
+        this.secondsPassed = 0;
+    }
+
+    setupBackgroundBox() {
+        let boardBounds = this.board.container.getBounds();
+        let boardScale = this.gameplayConfig.board.scale;
+        this.backgroundBox.displayWidth = boardBounds.width + ((16 + 7) * boardScale);
+        this.backgroundBox.displayHeight = boardBounds.height + ((16 + 16) * boardScale);
+    }
+
+    startAudio() {
+        //this.sound.get('musicPookatori').play();
+        this.sound.get('musicHoliznaEncounter').play();
     }
 
     setupTexts() {
@@ -331,7 +312,11 @@ export class Game extends Scene
 
     setupPipeManager () {
 
-        this.pipeManager = this.physics.add.existing(new PipeManager(this, this.PIPE_MANAGER_CONFIG, this.gameplayConfig), true);
+        this.pipeManager = this.physics.add.existing(new PipeManager(this,  {
+            immovable: true
+            // classType : Pipe,
+            // runChildUpdate : true
+        }, this.gameplayConfig), true);
 
     }
 
@@ -460,6 +445,7 @@ export class Game extends Scene
 
         this.sound.play('sfxPipeExplosion');
         this.points -= this.gameplayConfig.wrongPipePoints;
+        if (this.gameState === GameState.WATER_FLOWING) this.scoreText.text = 'Score: ' + this.points;
 
         cell.pipe.cell = null;
         cell.pipe.destroy();
