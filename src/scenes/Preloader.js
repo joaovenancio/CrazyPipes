@@ -106,8 +106,14 @@ export class Preloader extends Scene
     loadSFX() {
 
         this.load.audio('tick', 'sfx/371176__samsterbirdies__button-ting.wav');
+        this.load.audio('tickCountdown', 'sfx/tickCountdown-breviceps.wav');
 
         this.load.audio('sfxPipeExplosion', 'sfx/explosion-maodin204.wav');
+        this.load.audio('sfxCorrect', 'sfx/correct-maodin204.wav');
+        this.load.audio('sfxWrong', 'sfx/wrong-japanyoshithegamer.wav');
+
+
+        
         
     }
 

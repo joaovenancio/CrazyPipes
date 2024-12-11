@@ -166,6 +166,7 @@ export class Game extends Scene
                 if (this.countdownTimer.tick(delta)) {
                     this.countdown--;
                     this.scoreText.text = this.countdown;
+                    this.sound.play('tickCountdown');
 
                     if (this.countdown === 0) {
                         this.gameState = GameState.WATER_FLOWING;
@@ -199,6 +200,7 @@ export class Game extends Scene
 
     addPoints() {
         this.points += this.gameplayConfig.correctPipePoints;
+        this.sound.play('sfxCorrect');
         this.scoreText.text = 'Score: ' + this.points;
     }
 
@@ -206,6 +208,8 @@ export class Game extends Scene
         this.gameState = GameState.GAME_OVER;
 
         this.events.removeListener('cellClicked');
+
+        this.sound.play('sfxWrong');
 
         this.gameplayConfig.score = this.points;
 
