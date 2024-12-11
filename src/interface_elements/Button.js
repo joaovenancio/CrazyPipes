@@ -36,7 +36,7 @@ export class Button {
         this.scene = scene;
         this.text = text;
         this.position = [position[0], position[1]];
-        if (this.textStyle == null) this.textStyle = this.DEFAULT_TEXT_STYLE
+        if (textStyle == null) this.textStyle = this.DEFAULT_TEXT_STYLE
         else this.textStyle = textStyle;
         if (origin == null) this.origin = this.DEFAULT_ORIGIN;
         else this.origin = [origin[0],origin[1]];
