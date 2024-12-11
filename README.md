@@ -48,8 +48,8 @@ In order to deploy the game, you will need to upload *all* of the contents of th
 ## Author Information
 
 - João Vítor Demaria Venâncio 
-    -[LinkedIn](https://www.linkedin.com/in/jo%C3%A3o-v%C3%ADtor-ven%C3%A2ncio/)
-    -Email: [joaovitordvenancio@gmail.com](joaovitordvenancio@gmail.com)
+    - [LinkedIn](https://www.linkedin.com/in/jo%C3%A3o-v%C3%ADtor-ven%C3%A2ncio/)
+    - Email: [joaovitordvenancio@gmail.com](joaovitordvenancio@gmail.com)
 
 ## Credits
 
