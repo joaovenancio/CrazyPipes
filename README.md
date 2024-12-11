@@ -1,6 +1,6 @@
 # Crazy Pipes!
 
-Crarzy Pipes is a Phaser3 game inspired by PipeMania.
+Crazy Pipes is a Phaser3 game inspired by PipeMania. You have a line of pipes that you position on the board (the last pipe of the conveyor - located as the bottomest pipe - will be the next pipe positioned). The board has an initial point where the water starts to pour. If the water flows out of a pipe, the game is over. Every filled pipe gives 100 points, and every replaced pipe will make you lose points (-50). Use your mouse (or touch the screen) on the desired square to use your pipes! What is the high score that you can get?
 
 ## Versions
 
@@ -44,6 +44,11 @@ Once the server is running you can edit any of the files in the `src` folder. We
 After you run the `npm run build` command, your code will be built into a single bundle and saved to the `dist` folder, along with any other assets your project imported, or stored in the public assets folder.
 
 In order to deploy the game, you will need to upload *all* of the contents of the `index.zip` file (available on the releases tab of the GitHub page) OR all the contents of the `dist` folder (if you are using the source code) to a public facing web server.
+
+## Controls
+
+- **Mouse:** Position cursor to a square on the board
+- **Left Mouse Button**: Place/destroy a pipe on a square of the board.
 
 ## Author Information
 
