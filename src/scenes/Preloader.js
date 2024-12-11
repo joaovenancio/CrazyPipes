@@ -41,13 +41,13 @@ export class Preloader extends Scene
     init ()
     {
         //  We loaded this image in our Boot Scene, so we can display it here
-        this.add.image(512, 384, 'background');
+        this.add.image(this.game.config.width/2, this.game.config.height/2, 'background');
 
         //  A simple progress bar. This is the outline of the bar.
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+        this.add.rectangle(this.game.config.width/2, this.game.config.height/2, 468, 32).setStrokeStyle(1, 0xffffff);
 
         //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512-230, 384, 4, 28, 0xffffff);
+        const bar = this.add.rectangle(this.game.config.width/2-230, this.game.config.height/2, 4, 28, 0xffffff);
 
         //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
         this.load.on('progress', (progress) => {
@@ -80,7 +80,7 @@ export class Preloader extends Scene
         this.registry.set('gameSettings', {...DEFAULT_GAME_SETTINGS});
         this.registry.set('gameplaySettings', {...DEFAULT_GAMEPLAY_SETTINGS});
 
-        this.scene.start('Game');
+        this.scene.start('MainMenu');
     }
 
     loadImages() {
