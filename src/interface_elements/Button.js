@@ -5,14 +5,11 @@ export class Button {
     DEFAULT_TEXT_STYLE = {
         fontSize: '32px',
         fill: '#000000'
-    }
+    };
     DEFAULT_ON_POINTER_OVER_STYLE = {
         fill: '#FFFFFF'
-    }
-    DEFAULT_ORIGIN = [0.5,0.5]
-
-
-
+    };
+    DEFAULT_ORIGIN = [0.5,0.5];
     gameObject = null;
     scene = null;
     text = null;
@@ -21,16 +18,12 @@ export class Button {
     onPointerOverStyle = null;
     #position = [0,0];
 
-
-
     set position(newPosition) {
         this.#position = newPosition;
     }
     get position () {
         return this.#position;
     }
-
-
 
     constructor (scene, text, position, textStyle, origin) {
         this.scene = scene;
@@ -45,8 +38,6 @@ export class Button {
 
         this.createButton();
     }
-
-
 
     createButton () {
         this.gameObject = this.scene.add.text(this.position[0], this.position[1], this.text, this.textStyle)
@@ -70,5 +61,4 @@ export class Button {
         
         this.gameObject.on('pointerdown', onClickFunction);
     }
-
 }

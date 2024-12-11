@@ -12,7 +12,6 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         left : false,
         right : false
     }
-
     isWaterFlowing = false;
     isMoving = false;
     currentAnimationIndex = 0;
@@ -22,15 +21,12 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
     waterFlowing = null;
     pipeOrientation = '';
     pipeName = '';
-
     spritesheetAnimation = [];
     animationQtyFrames = 0;
     pipeConfig = null;
-
     physics = null;
 
     constructor (scene, position, pipeConfig) {
-        //debugger
         super(scene, position[0], position[1], pipeConfig.textureKey, pipeConfig.textureIndex);
 
         this.physics = scene.physics;
@@ -38,29 +34,18 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         this.flipX = pipeConfig.flipX;
         this.flipY = pipeConfig.flipY;
         this.pipeName = pipeConfig.pipeName;
-        //console.log(this.physics)
-        //console.log(Number.isInteger(test));
         this.isWaterAllowed = {...pipeConfig.isWaterAllowed};
         this.pipeOrientation = pipeConfig.pipeOrientation;
-        console.log(this.isWaterAllowed);
-
         this.spritesheetAnimation = pipeConfig.spritesheetAnimation;
         this.currentAnimationIndex = pipeConfig.textureIndex;
         this.waterFlowing = pipeConfig.waterFlowing;
-
         this.isWaterFlowing = false;
-
-        //console.log(this.x + ' | ' + this.y);
-
-        //this.addToUpdateList();
-        //this.body.immovable = true;
     }
 
     preUpdate(delta, time) {
         super.preUpdate(delta, time);
 
         this.goTowardsPosition();
-        
     }
 
     goTowardsPosition() {
@@ -81,70 +66,47 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
 
     startFlow() {
         this.isWaterFlowing = true;
-        //
+        
         if (this.pipeName === 'SRAIGHT_LR') {
-
             if (this.waterFlowing === WaterFlowing.LEFT) this.flipX = true;
             this.isWaterAllowed.left = false;
             this.isWaterAllowed.right = false;
-
         } 
         else if (this.pipeName === 'SRAIGHT_UD') {
-
             if (this.waterFlowing === WaterFlowing.DOWN) this.flipY = true;
             this.isWaterAllowed.up = false;
             this.isWaterAllowed.down = false;
-
         } 
         else if (this.pipeName === 'CURVE_LU') {
-            
             if (this.waterFlowing === WaterFlowing.LEFT) {
-
-                console.log('CHANGESSSSSSSSSSSSSSSSSSSSSSSSS');
                 this.spritesheetAnimation = [8,13];
                 this.currentAnimationIndex = 7;
-
             }
 
             this.isWaterAllowed.up = false;
             this.isWaterAllowed.left = false;
-
         } 
         else if (this.pipeName === 'CURVE_LD') {
-
             if (this.waterFlowing === WaterFlowing.LEFT) {
-
                 this.spritesheetAnimation = [8,13];
                 this.currentAnimationIndex = 7;
-
-
             }
 
             this.isWaterAllowed.down = false;
             this.isWaterAllowed.left = false;
-            console.log("@@@@@@@@@@@@@@@@@@@@@@@");
         }
         else if (this.pipeName === 'CURVE_RU') {
             if (this.waterFlowing === WaterFlowing.RIGHT) {
-
                 this.spritesheetAnimation = [8,13];
                 this.currentAnimationIndex = 7;
-
-
             }
         }
         else if (this.pipeName === 'CURVE_RD') {
             if (this.waterFlowing === WaterFlowing.RIGHT) {
-
                 this.spritesheetAnimation = [8,13];
                 this.currentAnimationIndex = 7;
-
-
             }
         }
-
-        
-        
     }
 
     flow() {

@@ -1,14 +1,5 @@
 import { Scene } from 'phaser';
 import { Button } from '../interface_elements/Button';
-import { Cell } from '../board/Cell';
-import { Board } from '../board/Board';
-import { Pipe } from '../pipe/Pipe';
-import { PipeManager, PIPES } from '../pipe/PipeManager';
-import { PipeHolder } from '../pipe/PipeHolder';
-import { SinglyLinkedList } from '../data_structures/SinglyLinkedList';
-import { Conveyor } from '../conveyour/Conveyor';
-import { Timer } from '../timer/Timer';
-import { GameState } from '../state/GameState';
 
 export class MainMenu extends Scene
 {
@@ -16,8 +7,7 @@ export class MainMenu extends Scene
     fontSize = '70px';
     textColor = '#000000';
 
-    constructor ()
-    {
+    constructor () {
         super('MainMenu');
     }
 
@@ -26,17 +16,13 @@ export class MainMenu extends Scene
         
     }
 
-    preload ()
-    {
+    preload () {
         this.loadGlobalVariables();
     }
 
-    create ()
-    {   
+    create () {   
         this.setupTitle();
-
         this.setupButtons();
-        
     }
 
 
