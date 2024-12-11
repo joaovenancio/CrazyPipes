@@ -74,65 +74,66 @@ export class Game extends Scene
 
         switch (this.gameState) {
             case GameState.WATER_FLOWING:
-
-                if (this.timer.tick(delta)) {
-
-                    this.secondsPassed++;
-        
-                    this.sound.play('tick');
-        
-                    if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
-        
-                        //console.log(this.pipeManager);
-                        let nextPipe = this.pipeManager.getNextPipe(this.board.cells);  //TO-DO !!!!!!!!!
-                        console.log('!!!!!!!!!!!!!!!');
-                        console.log(nextPipe);
-        
-                        this.pipeManager.currentPipe = nextPipe;
-        
-                        console.log(nextPipe);
-        
-                        if ( nextPipe === null) {
-                            this.gameOver();
-                            return;
-                        }
-        
-                        this.addPoints();
-                        nextPipe.startFlow();
-                        this.secondsPassed = 0;
-                        //this.pipeManager.currentPipe = nextPipe;
-                        return;
-        
-                    }
-        
-                    this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
-                    //sound
-                    //console.log('AYOOO');
-                }
-
+                this.runWaterOnPipes(delta);
                 break;
 
             case GameState.PLAYING: 
-
-                if (this.countdownTimer.tick(delta)) {
-                    this.countdown--;
-                    this.scoreText.text = this.countdown;
-                    this.sound.play('tickCountdown');
-
-                    if (this.countdown === 0) {
-                        this.gameState = GameState.WATER_FLOWING;
-                        this.scoreText.text = 'Score: ' + this.points;
-                    }
-
-                } else {
-                    
-                }
-
+                this.runCountdown(delta);
                 break
+
         }
 
-        if (this.gameState !== GameState.WATER_FLOWING) return;
+        //if (this.gameState !== GameState.WATER_FLOWING) return;
         
+    }
+
+    runWaterOnPipes(delta) {
+        if (this.timer.tick(delta)) {
+
+            this.secondsPassed++;
+
+            this.sound.play('tick');
+
+            if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
+
+                //console.log(this.pipeManager);
+                let nextPipe = this.pipeManager.getNextPipe(this.board.cells);  //TO-DO !!!!!!!!!
+                console.log('!!!!!!!!!!!!!!!');
+                console.log(nextPipe);
+
+                this.pipeManager.currentPipe = nextPipe;
+
+                console.log(nextPipe);
+
+                if ( nextPipe === null) {
+                    this.gameOver();
+                    return;
+                }
+
+                this.addPoints();
+                nextPipe.startFlow();
+                this.secondsPassed = 0;
+                //this.pipeManager.currentPipe = nextPipe;
+                return;
+
+            }
+
+            this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
+
+        }
+    }
+
+    runCountdown(delta) {
+        if (!this.countdownTimer.tick(delta)) return false;
+
+        this.countdown--;
+        this.scoreText.text = this.countdown;
+        this.sound.play('tickCountdown');
+
+        if (this.countdown === 0) {
+            this.gameState = GameState.WATER_FLOWING;
+            this.scoreText.text = 'Score: ' + this.points;
+        }
     }
 
 
