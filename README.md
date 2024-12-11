@@ -54,17 +54,17 @@ In order to deploy the game, you will need to upload *all* of the contents of th
 ## Credits
 
 - holizna-cc0-mini-boss.mp3:
-    - `Mini Boss` by HoliznaCC0. Available at (https://freemusicarchive.org/music/holiznacc0/retro-gamer-soundtrack/mini-boss/)
+    - **Mini Boss** by HoliznaCC0. Available at (https://freemusicarchive.org/music/holiznacc0/retro-gamer-soundtrack/mini-boss/)
     - License: Creative Commons 0
 
 - 371176__samsterbirdies__button-ting.wav:
-    - `button ting` by SamsterBirdies. Available at (https://freesound.org/s/371176/)
+    - **button ting** by SamsterBirdies. Available at (https://freesound.org/s/371176/)
     - License: Creative Commons 0
 
 - correct-maodin204.wav: 
-    - `8bit coin 2` by MaoDin204. Available at (https://freesound.org/s/721807/)
+    - **8bit coin 2** by MaoDin204. Available at (https://freesound.org/s/721807/)
     - License: Creative Commons 0
 
 - wrong-japanyoshithegamer.wav:
-    - `8-bit Uh-Oh Sound` by JapanYoshiTheGamer (https://freesound.org/s/361255/)
+    - **8-bit Uh-Oh Sound** by JapanYoshiTheGamer (https://freesound.org/s/361255/)
     - License: Creative Commons 0
