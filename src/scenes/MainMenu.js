@@ -12,6 +12,10 @@ import { GameState } from '../state/GameState';
 
 export class MainMenu extends Scene
 {
+    screenCenter = null;
+    fontSize = '70px';
+    textColor = '#000000';
+
     constructor ()
     {
         super('MainMenu');
@@ -29,7 +33,28 @@ export class MainMenu extends Scene
 
     create ()
     {   
+        this.setupTitle();
 
+        this.setupButtons();
+        
+    }
+
+
+    setupButtons() {
+        let textStyle = {fontSize: this.fontSize, fill: this.textColor}
+        let buttonPosition = [...this.screenCenter];
+        buttonPosition[1] += 50;
+        let button = new Button(this, 'START', buttonPosition, textStyle, null);
+        button.addOnClick(this.startGame.bind(this));
+    }
+
+    setupTitle() {
+        let textStyle = {fontSize: '100px', fill: this.textColor};
+        let buttonPosition = [...this.screenCenter];
+        buttonPosition[1] -= 80;
+
+        this.add.text(buttonPosition[0], buttonPosition[1], 'CRAZY PIPES!', textStyle)
+        .setOrigin(0.5);
     }
 
     loadGlobalVariables() {
@@ -37,9 +62,11 @@ export class MainMenu extends Scene
         this.gameplayConfig = this.registry.get('gameplaySettings');
         this.screenCenter = this.registry.get('screenCenter');
 
-        this.conveyorY = this.conveyorY * this.gameplayConfig.board.scale
-        this.gameState = this.gameplayConfig.state;
-
     }
     
+    startGame() {
+        console.log('clikc');
+        this.scene.start('Game');
+    }
+
 }
