@@ -33,6 +33,7 @@ export class Game extends Scene
 
     gameState = null;
 
+    scoreTextPositionY = 20;
 
     points = 0;
 
@@ -77,10 +78,10 @@ export class Game extends Scene
         this.nextPipe = null;
         this.timer = null;
         this.points = 0;
+        this.scoreTextPositionY = 20;
 
 
         this.setupBackground();
-        //this.setupTexts();
         this.setupBoard();
 
         let boardBounds = this.board.container.getBounds();
@@ -90,6 +91,8 @@ export class Game extends Scene
         
         this.setupConveyor();
         this.setupStatusBar();
+        this.setupTexts();
+        
         this.setupPipeManager();  
         this.setupPipeQueue(); 
         //this.menu();
@@ -103,6 +106,7 @@ export class Game extends Scene
         this.timer = new Timer(this.gameplayConfig.pipeFillTime);
 
         this.secondsPassed = 0;
+
 
         this.play();
 
@@ -148,6 +152,16 @@ export class Game extends Scene
             //sound
             //console.log('AYOOO');
         }
+    }
+
+    setupTexts() {
+
+        let textStyle = {fontSize: '60px', fill: '#000000'};
+
+        this.add.text(this.screenCenter[0], this.scoreTextPositionY, 'COUNTDOWN', textStyle)
+        .setOrigin(0.5,0); //.setAbove();
+
+        console.log("OIIIIIIIIIII?");
     }
 
     addPoints() {
@@ -362,13 +376,13 @@ export class Game extends Scene
         this.backgroundBox = this.add.image(this.screenCenter[0], this.screenCenter[1] + this.gameplayConfig.board.paddingY, 'box').setOrigin(0.5);
     }
 
-    setupTexts() {
-        // this.add.text(...screenCenter, 'Main Menu', {
-        //     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-        //     stroke: '#000000', strokeThickness: 8,
-        //     align: 'center'
-        // }).setOrigin(0.5);
-    }
+    // setupTexts() {
+    //     // this.add.text(...screenCenter, 'Main Menu', {
+    //     //     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+    //     //     stroke: '#000000', strokeThickness: 8,
+    //     //     align: 'center'
+    //     // }).setOrigin(0.5);
+    // }
 
     setupStatusBar() {
         let statusBar = this.add.image(this.statusPositionX, this.statusPositionY, 'statusBar').setOrigin(0);
