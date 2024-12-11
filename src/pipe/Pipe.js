@@ -80,6 +80,7 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
     }
 
     startFlow() {
+        this.isWaterFlowing = true;
         //
         if (this.pipeName === 'SRAIGHT_LR') {
 

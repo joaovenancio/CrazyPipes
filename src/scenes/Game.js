@@ -186,6 +186,7 @@ export class Game extends Scene
         let pipeType = possiblePipes[Phaser.Math.Between( 0, possiblePipes.length-1)]; 
 
         let startingPipe = this.pipeManager.createPipe(pipeType, cell.localPosition, PipeHolder.BOARD) ;
+        startingPipe.isWaterFlowing = true;
         this.board.container.add(startingPipe);
         this.pipeManager.currentPipe = startingPipe;
 
@@ -353,6 +354,12 @@ export class Game extends Scene
     }
 
     occupiedCellClicked(cell) {
+
+        if (cell.pipe.isWaterFlowing) {
+            //No pipe sfx here
+            return;
+        }
+
         this.sound.play('sfxPipeExplosion');
         this.points -= this.gameplayConfig.wrongPipePoints;
 
