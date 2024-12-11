@@ -64,6 +64,21 @@ export class Game extends Scene
 
     create ()
     {   
+        this.conveyor = null;
+        this.conveyorSpriteHeight = 0;
+        this.conveyorSpriteWidth = 0;
+        this.statusBarScale = 5;
+        this.statusPositionX = 0;
+        this.statusPositionY = -30;
+        this.boardPositionX;
+        this.board = null;
+        this.backgroundBox = null;
+        this.pipeManager = null;
+        this.nextPipe = null;
+        this.timer = null;
+        this.points = 0;
+
+
         this.setupBackground();
         //this.setupTexts();
         this.setupBoard();
@@ -81,12 +96,13 @@ export class Game extends Scene
         this.setupAudio(); 
 
         //this.sound.get('musicPookatori').play();
-        //this.sound.get('musicHoliznaEncounter').play();
+        this.sound.get('musicHoliznaEncounter').play();
 
         this.setupStartingPipe();
 
         this.timer = new Timer(this.gameplayConfig.pipeFillTime);
 
+        this.secondsPassed = 0;
 
         this.play();
 
@@ -141,7 +157,11 @@ export class Game extends Scene
     gameOver() {
         this.gameState = GameState.GAME_OVER;
 
+        this.events.removeListener('cellClicked');
+
         console.log('Game -> GameOver(): Final score = ' + this.points);
+
+        this.scene.start('GameOver');
     }
 
 
