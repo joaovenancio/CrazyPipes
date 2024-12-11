@@ -80,7 +80,7 @@ export class Preloader extends Scene
         this.registry.set('gameSettings', {...DEFAULT_GAME_SETTINGS});
         this.registry.set('gameplaySettings', {...DEFAULT_GAMEPLAY_SETTINGS});
 
-        this.scene.start('MainMenu');
+        this.scene.start('Game');
     }
 
     loadImages() {
