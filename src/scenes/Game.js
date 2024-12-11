@@ -30,10 +30,12 @@ export class Game extends Scene
     nextPipe = null;
     
     timer = null;
+    countdownTimer = null;
 
     gameState = null;
 
     scoreTextPositionY = 20;
+    scoreText = null;
 
     points = 0;
 
@@ -80,6 +82,9 @@ export class Game extends Scene
         this.points = 0;
         this.scoreTextPositionY = 20;
 
+        this.countdownTimer = new Timer(1000);
+        this.countdown = this.gameplayConfig.countdown;
+
 
         this.setupBackground();
         this.setupBoard();
@@ -104,9 +109,9 @@ export class Game extends Scene
         this.setupStartingPipe();
 
         this.timer = new Timer(this.gameplayConfig.pipeFillTime);
+        
 
         this.secondsPassed = 0;
-
 
         this.play();
 
@@ -116,49 +121,76 @@ export class Game extends Scene
 
     update(time, delta) {
 
-        if (this.gameState !== GameState.WATER_FLOWING) return;
+        switch (this.gameState) {
+            case GameState.WATER_FLOWING:
 
-        if (this.timer.tick(delta)) {
+                if (this.timer.tick(delta)) {
 
-            this.secondsPassed++;
-
-            this.sound.play('tick');
-
-            if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
-
-                //console.log(this.pipeManager);
-                let nextPipe = this.pipeManager.getNextPipe(this.board.cells);  //TO-DO !!!!!!!!!
-                console.log('!!!!!!!!!!!!!!!');
-                console.log(nextPipe);
-
-                this.pipeManager.currentPipe = nextPipe;
-
-                console.log(nextPipe);
-
-                if ( nextPipe === null) {
-                    this.gameOver();
-                    return;
+                    this.secondsPassed++;
+        
+                    this.sound.play('tick');
+        
+                    if (this.secondsPassed > this.gameplayConfig.pipeTotalFillTime) {
+        
+                        //console.log(this.pipeManager);
+                        let nextPipe = this.pipeManager.getNextPipe(this.board.cells);  //TO-DO !!!!!!!!!
+                        console.log('!!!!!!!!!!!!!!!');
+                        console.log(nextPipe);
+        
+                        this.pipeManager.currentPipe = nextPipe;
+        
+                        console.log(nextPipe);
+        
+                        if ( nextPipe === null) {
+                            this.gameOver();
+                            return;
+                        }
+        
+                        this.addPoints();
+                        nextPipe.startFlow();
+                        this.secondsPassed = 0;
+                        //this.pipeManager.currentPipe = nextPipe;
+                        return;
+        
+                    }
+        
+                    this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
+                    //sound
+                    //console.log('AYOOO');
                 }
 
-                this.addPoints();
-                nextPipe.startFlow();
-                this.secondsPassed = 0;
-                //this.pipeManager.currentPipe = nextPipe;
-                return;
+                break;
 
-            }
+            case GameState.PLAYING: 
 
-            this.pipeManager.currentPipe.flow(); //pipeTotalFillTime
-            //sound
-            //console.log('AYOOO');
+                if (this.countdownTimer.tick(delta)) {
+                    this.countdown--;
+                    this.scoreText.text = this.countdown;
+
+                    if (this.countdown === 0) {
+                        this.gameState = GameState.WATER_FLOWING;
+                        this.scoreText.text = 'Score: ' + this.points;
+                    }
+
+                } else {
+                    
+                }
+
+                break
         }
+
+        if (this.gameState !== GameState.WATER_FLOWING) return;
+
+        
+
+        
     }
 
     setupTexts() {
 
         let textStyle = {fontSize: '60px', fill: '#000000'};
 
-        this.add.text(this.screenCenter[0], this.scoreTextPositionY, 'COUNTDOWN', textStyle)
+        this.scoreText = this.add.text(this.screenCenter[0], this.scoreTextPositionY, this.countdown, textStyle)
         .setOrigin(0.5,0); //.setAbove();
 
         console.log("OIIIIIIIIIII?");
@@ -167,12 +199,15 @@ export class Game extends Scene
 
     addPoints() {
         this.points += this.gameplayConfig.correctPipePoints;
+        this.scoreText.text = 'Score: ' + this.points;
     }
 
     gameOver() {
         this.gameState = GameState.GAME_OVER;
 
         this.events.removeListener('cellClicked');
+
+        this.gameplayConfig.score = this.points;
 
         console.log('Game -> GameOver(): Final score = ' + this.points);
 
@@ -229,7 +264,7 @@ export class Game extends Scene
 
     play () {
 
-        this.gameState = GameState.WATER_FLOWING;
+        this.gameState = GameState.PLAYING;
 
         this.startWaterFlow();
     }
