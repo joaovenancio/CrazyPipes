@@ -4,7 +4,7 @@ Crazy Pipes is a Phaser3 game inspired by PipeMania. You have a line of pipes th
 
 ## Versions
 
-- Latest: [1.0.1](https://github.com/joaovenancio/CrazyPipes/releases/tag/v1.0.1)
+- Latest: [2.0.0](https://github.com/joaovenancio/CrazyPipes/releases/tag/v2.0.0)
 - Live version available on: https://venancio.itch.io/crazy-pipes 
 
 ## Requirements
