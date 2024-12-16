@@ -103,7 +103,21 @@ export const PIPES = {
         flipY : true
     },
     CROSS: {
-
+        pipeOrientation : 'cross',
+        pipeName : 'CROSS',
+        isWaterAllowed : {
+            up : true,
+            down : true,
+            left : true,
+            right : true
+        },
+        waterFlowing : null,
+        textureKey : 'pipeCross',
+        textureIndex : 0,
+        spritesheetAnimation : [0,6],
+        animationQtyFrames: 6,
+        flipX : false,
+        flipY : false
     },
     START_L: {
         isWaterAllowed : {
@@ -157,7 +171,7 @@ export const PIPES = {
         spritesheetAnimation : [0,6],
         animationQtyFrames: 6
     },
-    length : 6
+    length : 7
 }
 
 export class PipeManager extends Phaser.Physics.Arcade.Group {
@@ -257,8 +271,6 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
                 } 
                 else if (nextPipe.pipeOrientation === 'cross') {
                     if (this.setFlowWaterRight(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterUP(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterDown(nextPipe)) return nextPipe;
                 }
             break;
 
@@ -286,8 +298,6 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
                 } 
                 else if (nextPipe.pipeOrientation === 'cross') {
                     if (this.setFlowWaterLeft(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterUP(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterDown(nextPipe)) return nextPipe;
                 }
                 break;
 
@@ -314,9 +324,7 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
                         }
                     } 
                     else if (nextPipe.pipeOrientation === 'cross') {
-                        if (this.setFlowWaterDown(nextPipe)) return nextPipe;
-                        else if (this.setFlowWaterRight(nextPipe)) return nextPipe;
-                        else if (this.setFlowWaterUP(nextPipe)) return nextPipe;
+                        if (this.setFlowWaterUP(nextPipe)) return nextPipe;
                     }
                 break;
 
@@ -328,8 +336,6 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
                     if (!nextPipe.isWaterAllowed.up) return null;
                     
                     if (nextPipe.pipeName === 'CURVE_LU') {
-                        console.log("LU");
-
                         nextPipe.isWaterAllowed.right = false;
                         nextPipe.isWaterAllowed.up = false;
                         nextPipe.waterFlowing = WaterFlowing.LEFT;
@@ -346,9 +352,7 @@ export class PipeManager extends Phaser.Physics.Arcade.Group {
 
                 } 
                 else if (nextPipe.pipeOrientation === 'cross') {
-                    if (this.setFlowWaterRight(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterUP(nextPipe)) return nextPipe;
-                    else if (this.setFlowWaterDown(nextPipe)) return nextPipe;
+                    if (this.setFlowWaterDown(nextPipe)) return nextPipe;
                 }
                 break;
         }

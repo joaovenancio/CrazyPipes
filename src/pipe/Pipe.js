@@ -106,6 +106,47 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
                 this.currentAnimationIndex = 7;
             }
         }
+        else if (this.pipeName === 'CROSS') {
+            if (this.isWaterAllowed.right && this.isWaterAllowed.left) {
+                this.spritesheetAnimation = [14,20];
+                this.currentAnimationIndex = 14;
+
+                if (this.waterFlowing === WaterFlowing.UP) this.flipY = true;
+                else this.flipY = false;
+
+            }
+            else if (this.isWaterAllowed.up && this.isWaterAllowed.down) {
+                this.spritesheetAnimation = [0,6];
+                this.currentAnimationIndex = 0;
+
+                if (this.waterFlowing === WaterFlowing.LEFT) this.flipX = true;
+                else this.flipX = false;
+            }
+            else if (this.waterFlowing === WaterFlowing.UP) {
+                this.spritesheetAnimation = [7,13];
+                this.currentAnimationIndex = 7;
+                this.flipX = false;
+                this.flipY = true;
+            }
+            else if (this.waterFlowing === WaterFlowing.DOWN) {
+                this.spritesheetAnimation = [7,13];
+                this.currentAnimationIndex = 7;
+                this.flipX = false;
+                this.flipY = false;
+            }
+            else if (this.waterFlowing === WaterFlowing.RIGHT) {
+                this.spritesheetAnimation = [21,27];
+                this.currentAnimationIndex = 21;
+                this.flipX = true;
+                this.flipY = false;
+            }
+            else if (this.waterFlowing === WaterFlowing.LEFT) {
+                this.spritesheetAnimation = [21,27];
+                this.currentAnimationIndex = 21;
+                this.flipX = false;
+                this.flipY = false;
+            }
+        }
     }
 
     flow() {

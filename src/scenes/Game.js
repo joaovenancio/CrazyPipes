@@ -266,7 +266,7 @@ export class Game extends Scene {
 
     setupNewPipe(position, typeOfPipeHolder, typeOfPipe) {
         let pipeConfig = typeOfPipe; 
-
+        
         if (typeOfPipe == null) {
             switch (Phaser.Math.Between( 1, PIPES.length)) {
                 case 1:
@@ -286,6 +286,9 @@ export class Game extends Scene {
                     break;    
                 case 6:
                     pipeConfig = PIPES.CURVE_RU;
+                    break;
+                case 7:
+                    pipeConfig = PIPES.CROSS;
                     break;
             }
         }
