@@ -11,7 +11,7 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
         down : false,
         left : false,
         right : false
-    }
+    };
     isWaterFlowing = false;
     isMoving = false;
     currentAnimationIndex = 0;
