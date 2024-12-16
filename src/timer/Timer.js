@@ -16,7 +16,7 @@ export class Timer {
 
         if (this.elapsedTime < this.timerInMiliseconds) return false;
 
-        console.log('timer(deltaTime, timerInMiliseconds):' + this.timerInMiliseconds + ' passed.');
+        //console.log('timer(deltaTime, timerInMiliseconds):' + this.timerInMiliseconds + ' passed.');
 
         this.elapsedTime = 0;
         return true;
