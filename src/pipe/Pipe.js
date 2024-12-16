@@ -54,7 +54,7 @@ export class Pipe extends Phaser.Physics.Arcade.Sprite {
 
         this.body.reset(this.x, this.y);
         this.isMoving = false;
-        this.scene.events.emit('pipeFinishedMoving', this)
+        this.scene.events.emit('pipeFinishedMoving', this);
     }
 
     moveTo(position, miliSeconds) {
